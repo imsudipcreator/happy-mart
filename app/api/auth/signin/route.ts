@@ -1,4 +1,4 @@
-import { loginUser } from "@/server/services/auth.service";
+import AuthService from "@/server/services/auth.service";
 import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const loginResponse = await loginUser(user);
+  const loginResponse = await AuthService.loginUser(user);
 
   if (!loginResponse.success) {
     return NextResponse.json({

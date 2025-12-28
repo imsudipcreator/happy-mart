@@ -7,6 +7,7 @@ export type CartItem = {
 
 export interface CartState {
   cart: CartItem[];
+  setCart: (cart: CartItem[]) => void;
   addToCart: (item: CartItem) => void;
   removeFromCart: (item: CartItem) => void;
   clearCart: () => void;

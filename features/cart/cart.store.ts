@@ -1,9 +1,11 @@
 import { create } from "zustand";
-import { CartState } from "../types/cart-types";
+import { CartState } from "./types/cart-types";
 
 export const useCartStore = create<CartState>((set) => ({
   cart: [],
-  addToCart: (item) => {
+  setCart: (cart) => set({ cart }),
+  addToCart: async (item) => {
+    // update the state locally
     set((state) => {
       const existing = state.cart.find((i) => i.product.id === item.product.id);
 
@@ -16,7 +18,6 @@ export const useCartStore = create<CartState>((set) => ({
           ),
         };
       }
-
       // item does not exist → ADD it
       return {
         cart: [...state.cart, item],

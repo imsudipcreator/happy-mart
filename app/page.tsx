@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "@/features/cart/store/cart-store";
+import { useAddToCart } from "@/features/cart/cart.mutations";
 import { random } from "@/lib/utils";
 import { fetchProducts } from "@/server/queries/products.queries";
 import { Product } from "@/types/produt-types";
@@ -14,7 +14,7 @@ import { useMemo } from "react";
 
 export default function Home() {
   const router = useRouter();
-  const addToCart = useCartStore(state => state.addToCart);
+  const { mutate: addToCart } = useAddToCart();
   const { data: products, isLoading, isError, error } = useQuery({ queryKey: ["products"], queryFn: fetchProducts });
   const featuredProduct: Product | null = useMemo(() => {
     if (!products?.length) {
@@ -23,7 +23,8 @@ export default function Home() {
 
     const index = random(10);
     return products[index];
-  }, [products])
+  }, [products]);
+
 
   if (isLoading) {
     return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "@/features/cart/store/cart-store";
+import { useCartStore } from "@/features/cart/cart.store";
 import Button from "@/ui/Button";
 import Image from "next/image";
 

@@ -1,4 +1,4 @@
-import { registerUser } from "@/server/services/auth.service";
+import AuthService from "@/server/services/auth.service";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -15,17 +15,14 @@ export async function POST(req: NextRequest) {
     user = signUpSchema.parse(await req.json());
   } catch (err) {
     console.error("Invalid Input: ", err);
-    return NextResponse.json(
-      {
-        success: false,
-        code: 400,
-        message: "Invalid input",
-      },
-      { status: 400 }
-    );
+    return NextResponse.json({
+      success: false,
+      code: 400,
+      message: "Invalid input",
+    });
   }
 
-  const registerResponse = await registerUser(user);
+  const registerResponse = await AuthService.registerUser(user);
 
   if (!registerResponse.success) {
     console.error("Something went wrong while registering the user.");

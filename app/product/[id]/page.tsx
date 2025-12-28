@@ -1,5 +1,5 @@
 'use client'
-import { useCartStore } from '@/features/cart/store/cart-store';
+import { useCartStore } from '@/features/cart/cart.store';
 import { getProduct } from '@/server/queries/products.queries';
 import Button from '@/ui/Button';
 import { useQuery } from '@tanstack/react-query';

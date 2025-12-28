@@ -37,8 +37,7 @@ const cartSchema = new Schema(
     items: [
       {
         productId: {
-          type: Schema.Types.ObjectId,
-          ref: "Product",
+          type: Number,
           required: true,
         },
         quantity: {
@@ -63,8 +62,7 @@ const orderHistorySchema = new Schema(
     items: [
       {
         productId: {
-          type: Schema.Types.ObjectId,
-          ref: "Product",
+          type: Number,
           required: true,
         },
         quantity: {
