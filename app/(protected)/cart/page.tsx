@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function CartPage() {
     const { cart } = useCartStore(state => state);
-    if (!cart.length) {
+    if (!cart?.length) {
         return (
             <main className="w-full h-[calc(100vh-64px)] flex items-center justify-center">
                 Cart is empty

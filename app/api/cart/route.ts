@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import z from "zod";
 
 const cartSchema = z.object({
-  productId: z.string(),
+  productId: z.number(),
   quantity: z.number().min(1),
 });
 
@@ -51,7 +51,45 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: false,
       code: 400,
-      error: "DB_ERROR",
+      error: res.error,
+      message: res.message,
+    });
+  }
+
+  return NextResponse.json({ success: true, code: 200, data: res.data });
+}
+
+export async function GET(req: NextRequest) {
+  const token = req.cookies.get("token")?.value;
+
+  if (!token) {
+    return NextResponse.json({
+      success: false,
+      code: 400,
+      error: "UNAUTHORIZED",
+      message: "Unauthorized request",
+    });
+  }
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+
+  if (!decoded) {
+    return NextResponse.json({
+      success: false,
+      code: 400,
+      error: "UNAUTHORIZED",
+      message: "Unauthorized request",
+    });
+  }
+
+  const { userId } = decoded as { userId: string };
+  const res = await CartService.getCartItems(userId);
+
+  if (!res.success) {
+    return NextResponse.json({
+      success: false,
+      code: 400,
+      error: res.error,
       message: res.message,
     });
   }

@@ -7,7 +7,9 @@ export const useCartStore = create<CartState>((set) => ({
   addToCart: async (item) => {
     // update the state locally
     set((state) => {
-      const existing = state.cart.find((i) => i.product.id === item.product.id);
+      const existing = state.cart?.find(
+        (i) => i.product.id === item.product.id
+      );
 
       if (existing) {
         return {
@@ -24,6 +26,7 @@ export const useCartStore = create<CartState>((set) => ({
       };
     });
   },
+
   removeFromCart: ({ product }) => {
     set((state) => ({
       cart: state.cart.filter((item) => item.product.id !== product.id),
