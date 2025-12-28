@@ -1,3 +1,4 @@
+import { ReactQueryProvider } from "@/providers/react-query.provider";
 import Navbar from "@/ui/Navbar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -16,19 +17,22 @@ export const metadata: Metadata = {
   }
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${InterFont.variable} antialiased overflow-x-clip`}
-      >
-        <Navbar />
-        {children}
-      </body>
-    </html>
+    <ReactQueryProvider>
+      <html lang="en">
+        <body
+          className={`${InterFont.variable} antialiased overflow-x-clip`}
+        >
+          <Navbar />
+          {children}
+        </body>
+      </html>
+    </ReactQueryProvider>
   );
 }
