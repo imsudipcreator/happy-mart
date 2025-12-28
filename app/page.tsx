@@ -1,5 +1,6 @@
 "use client";
 
+import { useCartStore } from "@/features/cart/store/cart-store";
 import { random } from "@/lib/utils";
 import { fetchProducts } from "@/server/queries/products.queries";
 import { Product } from "@/types/produt-types";
@@ -12,8 +13,9 @@ import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 
 export default function Home() {
+  const router = useRouter();
+  const addToCart = useCartStore(state => state.addToCart);
   const { data: products, isLoading, isError, error } = useQuery({ queryKey: ["products"], queryFn: fetchProducts });
-  const router = useRouter()
   const featuredProduct: Product | null = useMemo(() => {
     if (!products?.length) {
       return null
@@ -52,7 +54,7 @@ export default function Home() {
                 <p className="text-4xl font-medium">${featuredProduct.price} only</p>
                 <div className="flex items-center gap-2">
                   <Button title="Check out this product" className="text-black" onClick={() => router.push(`/product/${featuredProduct.id}`)} />
-                  <Button title="Add to cart" className="text-black bg-amber-200 hover:bg-amber-300" />
+                  <Button title="Add to cart" className="text-black bg-amber-200 hover:bg-amber-300" onClick={() => addToCart({ product: featuredProduct, quantity: 1 })} />
                 </div>
               </div>
               <div className="w-[50%] flex items-center justify-center">
